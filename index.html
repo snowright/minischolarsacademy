@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mini Scholars Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --sun: #F5A623;
+    --sky: #4A90D9;
+    --grass: #5BAD6F;
+    --clay: #E8604C;
+    --cream: #FDF8F0;
+    --ink: #1C1C1C;
+    --soft: #F9F3E8;
+    --border: #E2D9C8;
+    --seed: #FFF4E0;
+    --sprout: #E8F5EC;
+    --bloom: #EAF2FB;
+    --scholar: #FEF0ED;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--cream);
+    border-bottom: 2px solid var(--border);
+    padding: 0 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--sun); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a {
+    text-decoration: none; color: var(--ink);
+    font-size: 0.88rem; font-weight: 500;
+    transition: color .2s;
+  }
+  nav ul a:hover { color: var(--sky); }
+  .nav-cta {
+    background: var(--sun);
+    color: var(--ink) !important;
+    padding: 0.45rem 1.1rem;
+    border-radius: 100px;
+    font-weight: 600 !important;
+  }
+  .nav-cta:hover { background: var(--clay); color: #fff !important; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--ink); border-radius: 2px; transition: .3s; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 92vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 5vw 8vw 5vw 8vw;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 180px;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 90 Q150 20 300 90 Q450 160 600 90 Q750 20 900 90 Q1050 160 1200 90 L1200 180 L0 180Z' fill='%235BAD6F' opacity='.12'/%3E%3C/svg%3E");
+    background-size: cover;
+    pointer-events: none;
+  }
+  .hero-text { position: relative; z-index: 2; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--seed);
+    border: 1.5px solid var(--sun);
+    border-radius: 100px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.78rem; font-weight: 600;
+    color: #8B5E00;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .hero-badge::before { content: '📍'; font-size: 0.9rem; }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.25rem;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--sky);
+  }
+  .hero-sub {
+    font-size: 1.05rem; line-height: 1.65;
+    color: #555; max-width: 480px;
+    margin-bottom: 2rem;
+  }
+  .hero-detail {
+    display: flex; flex-wrap: wrap; gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .hero-detail-item {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.88rem; font-weight: 500; color: #444;
+  }
+  .hero-detail-item .icon {
+    width: 32px; height: 32px;
+    background: var(--soft);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.95rem;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    font-size: 0.95rem; font-weight: 600;
+    text-decoration: none;
+    cursor: pointer; border: none;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+  .btn-primary { background: var(--clay); color: #fff; }
+  .btn-secondary { background: transparent; color: var(--ink); border: 2px solid var(--ink); margin-left: 1rem; }
+  .btn-secondary:hover { background: var(--ink); color: #fff; }
+
+  .hero-visual {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-card-stack {
+    position: relative; width: 340px; height: 380px;
+  }
+  .hero-card {
+    position: absolute;
+    width: 260px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 32px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.06);
+    border: 1.5px solid var(--border);
+  }
+  .hero-card:nth-child(1) { top: 0; left: 0; transform: rotate(-6deg); background: var(--seed); }
+  .hero-card:nth-child(2) { top: 60px; left: 40px; transform: rotate(2deg); background: var(--sprout); }
+  .hero-card:nth-child(3) { top: 120px; left: 70px; z-index: 3; background: #fff; }
+  .hero-card-emoji { font-size: 2rem; margin-bottom: 0.5rem; }
+  .hero-card-title { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .hero-card-sub { font-size: 0.78rem; color: #777; }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 6rem 8vw; }
+  .section-label {
+    display: inline-block;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--sky); margin-bottom: 0.75rem;
+  }
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 900; letter-spacing: -0.025em;
+    line-height: 1.1; margin-bottom: 1rem;
+  }
+  .section-intro { font-size: 1.05rem; color: #555; max-width: 560px; line-height: 1.7; margin-bottom: 3rem; }
+
+  /* ── GROUPS ── */
+  .groups-section { background: var(--soft); }
+  .groups-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 1.5rem;
+  }
+  .group-card {
+    background: #fff;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .group-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,.10); }
+  .group-card-header {
+    padding: 1.4rem 1.6rem 1.1rem;
+    display: flex; align-items: flex-start; justify-content: space-between;
+  }
+  .group-card.seedlings .group-card-header { background: var(--seed); }
+  .group-card.sprout .group-card-header { background: var(--sprout); }
+  .group-card.bloomers .group-card-header { background: var(--bloom); }
+  .group-card.scholars .group-card-header { background: var(--scholar); }
+  .group-emoji { font-size: 2.2rem; margin-bottom: 0.4rem; }
+  .group-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem; font-weight: 900; letter-spacing: -0.02em;
+  }
+  .group-subtitle { font-size: 0.78rem; color: #666; margin-top: 0.15rem; }
+  .group-badge {
+    font-size: 0.7rem; font-weight: 700;
+    background: rgba(0,0,0,.07);
+    padding: 0.2rem 0.55rem;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .group-card.scholars .group-badge {
+    background: var(--clay); color: #fff;
+  }
+  .group-card-body { padding: 1.25rem 1.6rem 1.6rem; }
+  .group-meta {
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+    margin-bottom: 1.2rem;
+  }
+  .group-meta-tag {
+    font-size: 0.78rem; font-weight: 500;
+    background: var(--soft); border: 1px solid var(--border);
+    padding: 0.25rem 0.65rem; border-radius: 100px; color: #555;
+  }
+  .group-skills { list-style: none; }
+  .group-skills li {
+    font-size: 0.85rem; color: #444; line-height: 1.5;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 0.5rem;
+  }
+  .group-skills li:last-child { border-bottom: none; }
+  .group-skills li::before { content: '✦'; color: var(--sun); font-size: 0.65rem; margin-top: 3px; flex-shrink: 0; }
+  .group-price-bar {
+    margin-top: 1.1rem; padding-top: 1rem;
+    border-top: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .group-price {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem; font-weight: 900; letter-spacing: -0.02em;
+  }
+  .group-price span { font-size: 0.85rem; color: #888; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+  .group-slots {
+    font-size: 0.75rem; font-weight: 600; color: var(--clay);
+    background: #FFF0EE; border: 1px solid #FFCFC8;
+    padding: 0.2rem 0.55rem; border-radius: 100px;
+  }
+
+  /* ── PRICING TABLE ── */
+  .pricing-section { background: #fff; }
+  .pricing-table-wrap { overflow-x: auto; }
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  thead th {
+    font-family: 'Fraunces', serif;
+    font-size: 0.85rem; font-weight: 700; letter-spacing: 0.03em;
+    text-align: left; padding: 0.9rem 1.2rem;
+    background: var(--ink); color: #fff;
+  }
+  thead th:first-child { border-radius: 12px 0 0 0; }
+  thead th:last-child { border-radius: 0 12px 0 0; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: var(--soft); }
+  tbody td { padding: 0.9rem 1.2rem; color: #444; }
+  tbody td:first-child { font-weight: 600; color: var(--ink); }
+  .td-highlight {
+    color: var(--grass) !important;
+    font-weight: 700 !important;
+  }
+  .payment-note {
+    margin-top: 1.5rem;
+    background: var(--seed);
+    border: 1.5px solid var(--sun);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+  }
+  .payment-note p { font-size: 0.88rem; line-height: 1.6; color: #555; }
+  .payment-note strong { color: var(--ink); }
+
+  /* ── DISCOUNTS ── */
+  .discounts-row {
+    display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem;
+  }
+  .discount-pill {
+    display: flex; align-items: center; gap: 0.6rem;
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 14px; padding: 0.9rem 1.3rem;
+    font-size: 0.88rem;
+  }
+  .discount-pill .dp-icon { font-size: 1.4rem; }
+  .discount-pill strong { color: var(--clay); }
+
+  /* ── ENROLLMENT ── */
+  .enrollment-section { background: var(--soft); }
+  .enrollment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .assessment-steps { display: flex; flex-direction: column; gap: 1rem; }
+  .step {
+    display: flex; gap: 1rem; align-items: flex-start;
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 14px; padding: 1.1rem 1.3rem;
+  }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--sky); color: #fff;
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-text h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .step-text p { font-size: 0.82rem; color: #666; line-height: 1.5; }
+  .placement-note {
+    background: var(--sky);
+    color: #fff;
+    border-radius: 16px;
+    padding: 1.6rem;
+    margin-top: 1.5rem;
+  }
+  .placement-note h4 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 900; margin-bottom: 0.5rem; }
+  .placement-note p { font-size: 0.85rem; line-height: 1.6; opacity: 0.92; }
+
+  /* ── POLICIES ── */
+  .policies-section { background: #fff; }
+  .policies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+  .policy-card {
+    background: var(--soft);
+    border: 1.5px solid var(--border);
+    border-radius: 16px; padding: 1.4rem;
+  }
+  .policy-card h4 {
+    font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700;
+    margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .policy-card ul { list-style: none; }
+  .policy-card ul li {
+    font-size: 0.83rem; color: #555; line-height: 1.55;
+    padding: 0.3rem 0; border-bottom: 1px solid var(--border);
+    display: flex; gap: 0.45rem; align-items: flex-start;
+  }
+  .policy-card ul li:last-child { border-bottom: none; }
+  .policy-card ul li::before { content: '—'; color: var(--clay); font-size: 0.75rem; margin-top: 3px; flex-shrink: 0; }
+
+  /* ── SUPPLIES ── */
+  .supplies-section {
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .supplies-section .section-label { color: var(--sun); }
+  .supplies-section h2 { color: var(--cream); }
+  .supplies-section .section-intro { color: #aaa; }
+  .supplies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 1rem; }
+  .supply-item {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 14px;
+    padding: 1.2rem 1rem;
+    text-align: center;
+  }
+  .supply-item .supply-emoji { font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .supply-item p { font-size: 0.8rem; color: #ccc; }
+  .fee-highlight {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    background: var(--sun); color: var(--ink);
+    border-radius: 14px; padding: 1rem 1.5rem;
+    margin-top: 2rem;
+    font-weight: 700; font-size: 0.95rem;
+  }
+
+  /* ── CONTACT / ENROLL ── */
+  .enroll-section {
+    background: var(--clay);
+    color: #fff;
+    text-align: center;
+    padding: 6rem 8vw;
+  }
+  .enroll-section h2 { color: #fff; }
+  .enroll-section p { color: rgba(255,255,255,.82); font-size: 1.05rem; max-width: 500px; margin: 1rem auto 2.5rem; line-height: 1.65; }
+  .btn-white { background: #fff; color: var(--clay); font-weight: 700; }
+  .btn-white:hover { background: var(--cream); }
+  .contact-chips { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+  .contact-chip {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+    border-radius: 100px; padding: 0.5rem 1.1rem;
+    font-size: 0.85rem; color: #fff; font-weight: 500;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: #888;
+    padding: 2.5rem 8vw;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer .footer-logo {
+    font-family: 'Fraunces', serif; font-weight: 900; font-size: 1rem; color: #fff;
+  }
+  footer .footer-logo span { color: var(--sun); }
+  footer p { font-size: 0.8rem; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    .hamburger { display: flex; }
+    .hero { grid-template-columns: 1fr; padding: 4rem 6vw 8rem; }
+    .hero-visual { display: none; }
+    .enrollment-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 4rem 5vw; }
+    .btn-secondary { margin-left: 0; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes floatUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-text > * {
+    animation: floatUp .6s ease both;
+  }
+  .hero-text > *:nth-child(1) { animation-delay: .05s; }
+  .hero-text > *:nth-child(2) { animation-delay: .15s; }
+  .hero-text > *:nth-child(3) { animation-delay: .25s; }
+  .hero-text > *:nth-child(4) { animation-delay: .35s; }
+  .hero-text > *:nth-child(5) { animation-delay: .45s; }
+
+  .hero-card-stack > * {
+    animation: floatUp .7s ease both;
+  }
+  .hero-card-stack > *:nth-child(1) { animation-delay: .2s; }
+  .hero-card-stack > *:nth-child(2) { animation-delay: .35s; }
+  .hero-card-stack > *:nth-child(3) { animation-delay: .5s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><span>Mini</span> Scholars Academy</a>
+  <ul>
+    <li><a href="#groups">Groups</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#enrollment">Enrollment</a></li>
+    <li><a href="#policies">Policies</a></li>
+    <li><a href="#enroll" class="nav-cta">Enroll Now</a></li>
+  </ul>
+  <div class="hamburger" onclick="this.classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge">Saturdays · Woodson Library</div>
+    <h1>Building <em>Strong</em><br>Foundations for<br>Early Learners</h1>
+    <p class="hero-sub">A Saturday enrichment program designed to prepare children ages 3–5 for kindergarten — through structured small-group learning, skill-based placement, and real academic growth.</p>
+    <div class="hero-detail">
+      <div class="hero-detail-item"><div class="icon">📅</div>Every Saturday</div>
+      <div class="hero-detail-item"><div class="icon">🎂</div>Ages 3–5 · Fully Potty Trained</div>
+      <div class="hero-detail-item"><div class="icon">👥</div>Max 3 per group</div>
+      <div class="hero-detail-item"><div class="icon">📍</div>Woodson Library</div>
+    </div>
+    <a href="#enroll" class="btn btn-primary">Apply for Enrollment</a>
+    <a href="#groups" class="btn btn-secondary">See Groups</a>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card-stack">
+      <div class="hero-card">
+        <div class="hero-card-emoji">🌱</div>
+        <div class="hero-card-title">Seedlings</div>
+        <div class="hero-card-sub">Letter exposure · Counting · Fine Motor</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-emoji">🌿</div>
+        <div class="hero-card-title">Sprout</div>
+        <div class="hero-card-sub">Phonics intro · Name writing · Patterns</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-emoji">🎓</div>
+        <div class="hero-card-title">Scholars</div>
+        <div class="hero-card-sub">Test prep · Blending · Sentences</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GROUPS -->
+<section class="groups-section" id="groups">
+  <span class="section-label">Program Groups</span>
+  <h2>Find Your Child's<br>Perfect Fit</h2>
+  <p class="section-intro">All students are placed by skill level — not age — so every child learns in the environment where they'll thrive most. Only <strong>3 slots per group.</strong></p>
+
+  <div class="groups-grid">
+
+    <!-- SEEDLINGS -->
+    <div class="group-card seedlings">
+      <div class="group-card-header">
+        <div>
+          <div class="group-emoji">🌱</div>
+          <div class="group-name">Seedlings</div>
+          <div class="group-subtitle">Group 1</div>
+        </div>
+        <div>
+          <div class="group-badge">9:00–10:00am</div>
+        </div>
+      </div>
+      <div class="group-card-body">
+        <div class="group-meta">
+          <span class="group-meta-tag">⏱ 1 hour</span>
+          <span class="group-meta-tag">Ages 3–5</span>
+        </div>
+        <ul class="group-skills">
+          <li>Following directions</li>
+          <li>Letter exposure (A–Z recognition)</li>
+          <li>Counting 1–10</li>
+          <li>Fine motor (tracing, coloring)</li>
+          <li>Shapes and colors</li>
+        </ul>
+        <div class="group-price-bar">
+          <div class="group-price">$45 <span>/ session</span></div>
+          <div class="group-slots">3 slots only</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPROUT -->
+    <div class="group-card sprout">
+      <div class="group-card-header">
+        <div>
+          <div class="group-emoji">🌿</div>
+          <div class="group-name">Sprout</div>
+          <div class="group-subtitle">Group 2</div>
+        </div>
+        <div>
+          <div class="group-badge">10:15–11:30am</div>
+        </div>
+      </div>
+      <div class="group-card-body">
+        <div class="group-meta">
+          <span class="group-meta-tag">⏱ 1 hr 15 min</span>
+          <span class="group-meta-tag">Ages 3–5</span>
+        </div>
+        <ul class="group-skills">
+          <li>Upper & lowercase letter recognition</li>
+          <li>Beginning sounds (intro to phonics)</li>
+          <li>Counting to 20</li>
+          <li>Shapes, colors & patterns</li>
+          <li>Name writing</li>
+        </ul>
+        <div class="group-price-bar">
+          <div class="group-price">$50 <span>/ session</span></div>
+          <div class="group-slots">3 slots only</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOOMERS -->
+    <div class="group-card bloomers">
+      <div class="group-card-header">
+        <div>
+          <div class="group-emoji">🌸</div>
+          <div class="group-name">Bloomers</div>
+          <div class="group-subtitle">Group 3</div>
+        </div>
+        <div>
+          <div class="group-badge">11:45am–1:00pm</div>
+        </div>
+      </div>
+      <div class="group-card-body">
+        <div class="group-meta">
+          <span class="group-meta-tag">⏱ 1 hr 15 min</span>
+          <span class="group-meta-tag">Ages 3–5</span>
+        </div>
+        <ul class="group-skills">
+          <li>Full phonics (letter sounds)</li>
+          <li>Name writing fluency, spelling, birthday & age</li>
+          <li>Number recognition to 30</li>
+          <li>Intro to addition</li>
+        </ul>
+        <div class="group-price-bar">
+          <div class="group-price">$55 <span>/ session</span></div>
+          <div class="group-slots">3 slots only</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCHOLARS -->
+    <div class="group-card scholars">
+      <div class="group-card-header">
+        <div>
+          <div class="group-emoji">🎓</div>
+          <div class="group-name">Scholars</div>
+          <div class="group-subtitle">Group 4 · Signature Program</div>
+        </div>
+        <div>
+          <div class="group-badge">⭐ Premium</div>
+        </div>
+      </div>
+      <div class="group-card-body">
+        <div class="group-meta">
+          <span class="group-meta-tag">⏱ 1 hr 30 min*</span>
+          <span class="group-meta-tag">Must be 4+ yrs</span>
+          <span class="group-meta-tag">1:15–2:45pm</span>
+        </div>
+        <ul class="group-skills">
+          <li>Phonics blending</li>
+          <li>Writing simple sentences</li>
+          <li>Addition & intro to subtraction</li>
+          <li>Problem solving & critical thinking</li>
+          <li>Multi-step directions & independent work</li>
+          <li>Kindergarten placement test prep</li>
+        </ul>
+        <div class="group-price-bar">
+          <div class="group-price">$60 <span>/ session</span></div>
+          <div class="group-slots">3 slots only</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <span class="section-label">Pricing</span>
+  <h2>Simple, Transparent<br>Pricing</h2>
+  <p class="section-intro">Save $10/month when you pay monthly. First session includes a one-time $30 supply kit fee.</p>
+
+  <div class="pricing-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Group</th>
+          <th>1st Session (w/ supplies)</th>
+          <th>Per Session</th>
+          <th>Monthly (4 weeks)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🌱 Seedlings</td>
+          <td>$75</td>
+          <td>$45</td>
+          <td class="td-highlight">$170 <small style="font-weight:400;color:#888">saves $10</small></td>
+        </tr>
+        <tr>
+          <td>🌿 Sprout</td>
+          <td>$80</td>
+          <td>$50</td>
+          <td class="td-highlight">$190 <small style="font-weight:400;color:#888">saves $10</small></td>
+        </tr>
+        <tr>
+          <td>🌸 Bloomers</td>
+          <td>$85</td>
+          <td>$55</td>
+          <td class="td-highlight">$210 <small style="font-weight:400;color:#888">saves $10</small></td>
+        </tr>
+        <tr>
+          <td>🎓 Scholars</td>
+          <td>$90</td>
+          <td>$60</td>
+          <td class="td-highlight">$230 <small style="font-weight:400;color:#888">saves $10</small></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="payment-note">
+    <p><strong>Payment Methods:</strong> Zelle or Cash App &nbsp;·&nbsp; <strong>Weekly payments</strong> due before Wednesday at 9am &nbsp;·&nbsp; <strong>Monthly payments</strong> due by the 1st of the month at 9am.</p>
+    <p style="margin-top:.5rem"><strong>Drop-in classes</strong> available if space permits — paid in advance, +$5 additional fee. &nbsp;·&nbsp; Monthly sign-up sheet goes out one week before the new month.</p>
+    <p style="margin-top:.5rem">⚠️ <strong>Payments secure the spot, not attendance.</strong> Your child's spot is reserved weekly unless a different schedule is agreed upon.</p>
+    <p style="margin-top:.5rem">📦 <strong>Supply kit fee ($30)</strong> is a one-time charge for your child's personal materials — it is added to your very first session payment only, not an ongoing enrollment fee.</p>
+  </div>
+
+  <div class="discounts-row">
+    <div class="discount-pill">
+      <span class="dp-icon">👶</span>
+      <span><strong>$10 off</strong> sibling discount</span>
+    </div>
+    <div class="discount-pill">
+      <span class="dp-icon">📣</span>
+      <span><strong>$15 off</strong> referral discount</span>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPLIES -->
+<section class="supplies-section">
+  <span class="section-label">Supply Kit</span>
+  <h2>Everything They Need,<br>Ready to Go</h2>
+  <p class="section-intro">Every new student receives a personal supply kit included in their first session payment. These materials are used each week and go home at the end of the program.</p>
+  <div class="supplies-grid">
+    <div class="supply-item"><div class="supply-emoji">📓</div><p>Journal</p></div>
+    <div class="supply-item"><div class="supply-emoji">📚</div><p>Workbook</p></div>
+    <div class="supply-item"><div class="supply-emoji">✏️</div><p>Pencils</p></div>
+    <div class="supply-item"><div class="supply-emoji">✂️</div><p>Safety Scissors</p></div>
+    <div class="supply-item"><div class="supply-emoji">🖍️</div><p>Crayons</p></div>
+    <div class="supply-item"><div class="supply-emoji">📁</div><p>Folder</p></div>
+    <div class="supply-item"><div class="supply-emoji">🗃️</div><p>Pencil Box</p></div>
+    <div class="supply-item"><div class="supply-emoji">📋</div><p>Binder</p></div>
+  </div>
+  <div class="fee-highlight">
+    🎒 One-time supply kit fee: <big>$30</big> — included in your first session payment
+  </div>
+</section>
+
+<!-- ENROLLMENT -->
+<section class="enrollment-section" id="enrollment">
+  <span class="section-label">Enrollment Process</span>
+  <h2>How Enrollment Works</h2>
+  <p class="section-intro">All students complete a 20–30 minute pre-enrollment assessment to ensure the best group placement.</p>
+
+  <div class="enrollment-grid">
+    <div class="assessment-steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <h4>Apply & Schedule Assessment</h4>
+          <p>Reach out to schedule a 20–30 min in-person assessment at a convenient time.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <h4>Assessment Areas Covered</h4>
+          <p>Letter recognition & sounds · Number recognition & counting · Fine motor skills (tracing, shapes) · Listening & following 1–2 step directions.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <h4>Group Placement</h4>
+          <p>Your child is placed in the group that best matches their current skill level — not their age.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <h4>Ongoing Reassessment</h4>
+          <p>Students are reassessed every 9 weeks to track progress and ensure the right group fit. Parent conferences follow each assessment.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="placement-note">
+        <h4>📌 Placement is based on skill, not age</h4>
+        <p>Every child learns differently. By placing students based on where they actually are academically, we create the most effective and encouraging learning environment for every child in the program.</p>
+      </div>
+
+      <div style="margin-top: 1.5rem; background: #fff; border: 1.5px solid var(--border); border-radius: 16px; padding: 1.4rem;">
+        <h4 style="font-family:'Fraunces',serif; font-size:1rem; font-weight:700; margin-bottom: 0.75rem;">📬 What to Expect After Placement</h4>
+        <ul style="list-style:none; font-size: 0.84rem; color: #555; line-height: 1.6;">
+          <li style="padding: .3rem 0; border-bottom: 1px solid var(--border);">Updates sent via email or text</li>
+          <li style="padding: .3rem 0; border-bottom: 1px solid var(--border);">Reminders tucked in your child's folder</li>
+          <li style="padding: .3rem 0; border-bottom: 1px solid var(--border);">Some groups will receive weekly homework</li>
+          <li style="padding: .3rem 0;">Monthly sign-up sheet released 1 week early</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POLICIES -->
+<section class="policies-section" id="policies">
+  <span class="section-label">Program Policies</span>
+  <h2>What to Know<br>Before You Enroll</h2>
+  <p class="section-intro">We keep our groups small and our standards consistent. These policies help us give every child the best experience.</p>
+
+  <div class="policies-grid">
+
+    <div class="policy-card">
+      <h4>🚫 Absences & Refunds</h4>
+      <ul>
+        <li>Unexcused absences receive no refund — spots are reserved and sessions are prepared in advance.</li>
+        <li>Excused absences: illness or family emergencies only.</li>
+        <li>Same-day absences are considered missed — not eligible for make-up.</li>
+      </ul>
+    </div>
+
+    <div class="policy-card">
+      <h4>🔄 Make-Up Policy</h4>
+      <ul>
+        <li>1 make-up session per month (if space is available and you qualify).</li>
+        <li>Must notify within 48 hours of the absence.</li>
+        <li>If class is cancelled by the instructor, a make-up is provided for all enrolled.</li>
+      </ul>
+    </div>
+
+    <div class="policy-card">
+      <h4>🤒 Illness Policy</h4>
+      <ul>
+        <li>Do not bring your child if they have a fever, vomiting, or a contagious illness within the last 48 hours.</li>
+      </ul>
+    </div>
+
+    <div class="policy-card">
+      <h4>🕘 Drop-Off & Pick-Up</h4>
+      <ul>
+        <li>Arrive 5–10 min early for bathroom breaks & check-in.</li>
+        <li>Pick up on time — other sessions follow your child's.</li>
+        <li>10-minute grace period; after that, a $15 late fee applies.</li>
+        <li>Late fee is due before the next session.</li>
+        <li>Continuous late pick-up may result in dismissal from the program.</li>
+      </ul>
+    </div>
+
+    <div class="policy-card">
+      <h4>🧡 Behavior Policy</h4>
+      <ul>
+        <li>If a child cannot be calmed within 15 consecutive minutes, a parent/guardian will be contacted for pickup.</li>
+        <li>Ongoing behavior challenges will require a parent conference to determine next steps.</li>
+      </ul>
+    </div>
+
+    <div class="policy-card">
+      <h4>📋 Group Waitlist</h4>
+      <ul>
+        <li>Each group holds only 3 students.</li>
+        <li>Once full, a waitlist is created.</li>
+        <li>You'll be contacted as soon as a slot becomes available.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ENROLL CTA -->
+<section class="enroll-section" id="enroll">
+  <h2>Ready to Enroll?</h2>
+  <p>Spots fill up fast — only 3 children per group. Reach out today to schedule your child's assessment and secure their place.</p>
+  <a href="mailto:minischolarsacademy2026@gmail.com" class="btn btn-white">Get in Touch to Enroll</a>
+  <p style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.75;">minischolarsacademy2026@gmail.com</p>
+  <div class="contact-chips">
+    <div class="contact-chip">💸 Zelle accepted</div>
+    <div class="contact-chip">💸 Cash App accepted</div>
+    <div class="contact-chip">📅 Saturdays · Woodson Library</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span>Mini</span> Scholars Academy</div>
+  <p>Building strong foundations for early learners · Ages 3–5 · Saturdays at Woodson Library</p>
+</footer>
+
+</body>
+</html>
