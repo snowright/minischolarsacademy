@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Mini Scholars Academy</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <style>
   :root {
     --sun: #F5A623;
@@ -240,7 +242,25 @@
   }
   .group-skills li:last-child { border-bottom: none; }
   .group-skills li::before { content: '✦'; color: var(--sun); font-size: 0.65rem; margin-top: 3px; flex-shrink: 0; }
-  .group-price-bar {
+  .btn-book {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.7rem;
+    border-radius: 100px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    text-align: center;
+  }
+  .btn-book:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+  .seedlings .btn-book { background: #F5A623; color: #fff; }
+  .sprout .btn-book { background: #5BAD6F; color: #fff; }
+  .bloomers .btn-book { background: #4A90D9; color: #fff; }
+  .scholars .btn-book { background: #E8604C; color: #fff; }
     margin-top: 1.1rem; padding-top: 1rem;
     border-top: 1.5px solid var(--border);
     display: flex; align-items: center; justify-content: space-between;
@@ -417,6 +437,7 @@
     .hero { grid-template-columns: 1fr; padding: 4rem 6vw 8rem; }
     .hero-visual { display: none; }
     .enrollment-grid { grid-template-columns: 1fr; }
+    #signup > div > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
   }
   @media (max-width: 600px) {
     section { padding: 4rem 5vw; }
@@ -454,7 +475,8 @@
     <li><a href="#groups">Groups</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#enrollment">Enrollment</a></li>
-    <li><a href="#policies">Policies</a></li>
+    <li><a href="#calendar">Calendar</a></li>
+    <li><a href="#signup">Book a Spot</a></li>
     <li><a href="#enroll" class="nav-cta">Enroll Now</a></li>
   </ul>
   <div class="hamburger" onclick="this.classList.toggle('open')">
@@ -534,6 +556,7 @@
           <div class="group-price">$45 <span>/ session</span></div>
           <div class="group-slots">3 slots only</div>
         </div>
+        <button class="btn-book" onclick="Calendly.initPopupWidget({url:'https://calendly.com/minischolarsacademy2026/seedlings'});return false;">Book Seedlings →</button>
       </div>
     </div>
 
@@ -565,6 +588,7 @@
           <div class="group-price">$50 <span>/ session</span></div>
           <div class="group-slots">3 slots only</div>
         </div>
+        <button class="btn-book" onclick="Calendly.initPopupWidget({url:'https://calendly.com/minischolarsacademy2026/sprouts'});return false;">Book Sprout →</button>
       </div>
     </div>
 
@@ -595,6 +619,7 @@
           <div class="group-price">$55 <span>/ session</span></div>
           <div class="group-slots">3 slots only</div>
         </div>
+        <button class="btn-book" onclick="Calendly.initPopupWidget({url:'https://calendly.com/minischolarsacademy2026/bloomers'});return false;">Book Bloomers →</button>
       </div>
     </div>
 
@@ -628,6 +653,7 @@
           <div class="group-price">$60 <span>/ session</span></div>
           <div class="group-slots">3 slots only</div>
         </div>
+        <button class="btn-book" onclick="Calendly.initPopupWidget({url:'https://calendly.com/minischolarsacademy2026/scholars'});return false;">Book Scholars →</button>
       </div>
     </div>
 
@@ -689,11 +715,17 @@
   <div class="discounts-row">
     <div class="discount-pill">
       <span class="dp-icon">👶</span>
-      <span><strong>$10 off</strong> sibling discount</span>
+      <div>
+        <strong>Sibling Discount</strong><br>
+        <span style="font-size:0.8rem;color:#666;">Applied at instructor's discretion — ask for details</span>
+      </div>
     </div>
     <div class="discount-pill">
       <span class="dp-icon">📣</span>
-      <span><strong>$15 off</strong> referral discount</span>
+      <div>
+        <strong>$15 Session Credit</strong> per referral<br>
+        <span style="font-size:0.8rem;color:#666;">Applied toward any one session when your referral enrolls</span>
+      </div>
     </div>
   </div>
 </section>
@@ -836,6 +868,82 @@
       </ul>
     </div>
 
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section style="background: var(--soft); padding: 6rem 8vw;" id="calendar">
+  <span class="section-label">Class Schedule</span>
+  <h2>Session Calendar</h2>
+  <p class="section-intro">Check below to see upcoming Saturdays, cancelled sessions, and any schedule changes. This calendar is updated in real time by the instructor.</p>
+
+  <div style="background:#fff; border: 1.5px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,.06);">
+    <!-- 
+      ── HOW TO EMBED YOUR GOOGLE CALENDAR ──
+      1. Go to calendar.google.com and sign in with minischolarsacademy2026@gmail.com
+      2. In the left sidebar, click the three dots next to your calendar name → "Settings and sharing"
+      3. Scroll down to "Integrate calendar" → copy the "Embed code"
+      4. Replace the entire <iframe> below with your copied embed code
+      5. Add style="width:100%; border:none; min-height:600px;" to the iframe tag
+    -->
+    <iframe
+      src="https://calendar.google.com/calendar/embed?src=minischolarsacademy2026%40gmail.com&ctz=America%2FChicago&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&mode=MONTH"
+      style="width:100%; border:none; min-height:600px; display:block;"
+      frameborder="0"
+      scrolling="no"
+      title="Mini Scholars Academy Class Calendar">
+    </iframe>
+  </div>
+
+  <div style="margin-top:1.25rem; background: var(--seed); border: 1.5px solid var(--sun); border-radius: 14px; padding: 1.1rem 1.4rem; font-size: 0.85rem; color: #7A5000; line-height: 1.6;">
+    📌 <strong>Tip:</strong> Green events = class is in session. Events marked <em>CANCELLED</em> or <em>NO CLASS</em> mean that Saturday is off. Check back each week for updates.
+  </div>
+</section>
+
+<!-- BOOK A SPOT -->
+<section style="background: #fff; padding: 6rem 8vw;" id="signup">
+  <span class="section-label">Book Your Spot</span>
+  <h2>Ready to Reserve<br>Your Child's Slot?</h2>
+  <p class="section-intro">Select your child's group below to book directly through Calendly. You'll receive a confirmation email instantly. Only 3 spots per group — book early!</p>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 3rem;">
+
+    <div style="background: var(--seed); border: 1.5px solid var(--sun); border-radius: 18px; padding: 1.4rem; text-align: center;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌱</div>
+      <div style="font-family:'Fraunces',serif; font-weight:900; font-size:1.1rem; margin-bottom:0.25rem;">Seedlings</div>
+      <div style="font-size:0.8rem; color:#888; margin-bottom:1rem;">9:00–10:00am · $45/session</div>
+      <button onclick="Calendly.initPopupWidget({url:'https://calendly.com/minischolarsacademy2026/seedlings'});return false;" style="width:100%; padding:0.65rem; border-radius:100px; border:none; background:#F5A623; color:#fff; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.88rem; cursor:pointer;">Book Now →</button>
+    </div>
+
+    <div style="background: var(--sprout); border: 1.5px solid #B8DFC3; border-radius: 18px; padding: 1.4rem; text-align: center;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌿</div>
+      <div style="font-family:'Fraunces',serif; font-weight:900; font-size:1.1rem; margin-bottom:0.25rem;">Sprout</div>
+      <div style="font-size:0.8rem; color:#888; margin-bottom:1rem;">10:15–11:30am · $50/session</div>
+      <button onclick="Calendly.initPopupWidget({url:'https://calendly.com/minischolarsacademy2026/sprouts'});return false;" style="width:100%; padding:0.65rem; border-radius:100px; border:none; background:#5BAD6F; color:#fff; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.88rem; cursor:pointer;">Book Now →</button>
+    </div>
+
+    <div style="background: var(--bloom); border: 1.5px solid #B8D4EF; border-radius: 18px; padding: 1.4rem; text-align: center;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌸</div>
+      <div style="font-family:'Fraunces',serif; font-weight:900; font-size:1.1rem; margin-bottom:0.25rem;">Bloomers</div>
+      <div style="font-size:0.8rem; color:#888; margin-bottom:1rem;">11:45am–1:00pm · $55/session</div>
+      <button onclick="Calendly.initPopupWidget({url:'https://calendly.com/minischolarsacademy2026/bloomers'});return false;" style="width:100%; padding:0.65rem; border-radius:100px; border:none; background:#4A90D9; color:#fff; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.88rem; cursor:pointer;">Book Now →</button>
+    </div>
+
+    <div style="background: var(--scholar); border: 1.5px solid #FFCFC8; border-radius: 18px; padding: 1.4rem; text-align: center;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎓</div>
+      <div style="font-family:'Fraunces',serif; font-weight:900; font-size:1.1rem; margin-bottom:0.25rem;">Scholars</div>
+      <div style="font-size:0.8rem; color:#888; margin-bottom:1rem;">1:15–2:45pm · $60/session</div>
+      <button onclick="Calendly.initPopupWidget({url:'https://calendly.com/minischolarsacademy2026/scholars'});return false;" style="width:100%; padding:0.65rem; border-radius:100px; border:none; background:#E8604C; color:#fff; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.88rem; cursor:pointer;">Book Now →</button>
+    </div>
+
+  </div>
+
+  <div style="background: var(--seed); border: 1.5px solid var(--sun); border-radius: 16px; padding: 1.4rem; max-width: 600px;">
+    <h4 style="font-family:'Fraunces',serif; font-size:1rem; font-weight:700; margin-bottom:0.6rem;">💸 After Booking</h4>
+    <p style="font-size:0.84rem; color:#666; line-height:1.7;">Your spot is <strong>reserved</strong> but not confirmed until payment is received. Send payment via <strong>Zelle</strong> or <strong>Cash App</strong>:<br>
+    · Monthly payment due by the <strong>1st of the month at 9am</strong><br>
+    · Weekly payment due each <strong>Wednesday by 9am</strong><br><br>
+    ⚠️ Payments secure the spot — not attendance.</p>
   </div>
 </section>
 
